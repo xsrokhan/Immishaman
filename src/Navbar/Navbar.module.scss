@@ -1,0 +1,124 @@
+.nav {
+    ackground-color: #1F2326;
+    background-color: #122d57;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+
+    & > div:first-child { // logo
+        width: 4rem;
+        height: 100%;
+        flex-shrink: 0;
+        transition: width 0.5s;
+
+        & > svg {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    & > .lang_container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        color: white;
+        width: 80% !important; 
+        transition: width 1s ease;
+        ackground-color: green;
+        
+        & > div:first-child {
+            
+            & > .svg {
+                transition: transform 1s;
+            }
+
+            & > .options_open {
+                transform: rotate(540deg);
+            }
+        }
+
+        & > .lang_options > div, .selected_lang {
+            cursor: pointer;
+        }
+
+        & > .lang_options {
+            transition: width 1.2s ease;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-around;
+            width: 0;
+            flex-shrink: 0; /* Prevents the menu from shrinking */
+            ackground-color: aqua;
+
+            & > div > img {
+                display: none;
+            }
+
+            & > div > div::after {
+                content: "";
+                display: block;
+                height: 1px;
+                width: 0;
+                background-color: white;
+                transition: width 0.3s;
+            }
+            
+            & > div:hover > div::after {
+                width: 100%;
+            }
+        }
+
+        & > .selected_lang {
+            border-bottom: 1px solid white;
+            margin-left: 1rem;
+        }
+
+        & > .options_open {
+            width: 100%;
+          }
+    }
+
+    & > .lang_container.options_open {
+        width: 80%;
+    }
+}
+
+@media (max-width: 900px) { 
+    .nav > div:first-child.options_open {
+        width: 0;
+    }
+    .nav > .lang_container > .lang_options {
+        
+        & > div > div {
+            display: none;
+        }
+
+        & > div > img {
+            display: inline-block;
+            height: 20px;
+            width: 20px;
+        }
+    }
+
+    .nav > .lang_container.options_open {
+        width: 90%;
+    } 
+
+    .nav > .lang_container {
+
+        & > .options_open {
+            width: 90%;
+        }
+    }
+}
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
