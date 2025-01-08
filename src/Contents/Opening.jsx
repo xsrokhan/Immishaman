@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { motion, useAnimation } from "framer-motion"
 import { useInView } from "react-intersection-observer"
-import { IoShieldCheckmark } from "react-icons/io5";
+import { IoShieldCheckmark } from "react-icons/io5"
+import { LangProvider } from '../LangProvider'
 
+const points = ["bp1", "bp2", "bp3"]
 
 function Opening({ classes }) {
-    const points = ["Lowest rates", "Fastest service", "Quality guarantee"]
     const controls = useAnimation()
     const { ref, inView } = useInView({
       triggerOnce: true,    // Animation triggers only once
@@ -17,36 +18,44 @@ function Opening({ classes }) {
         controls.start("visible")
       }
     }, [controls, inView])
+
+    const fadeInBG = {
+      hidden: { backgroundColor: "white" },
+      visible: { backgroundColor: "rgb(244, 248, 249)", transition: { delay: 12.2, duration: 14.8 } } // rgb is needed for framer motion, otherwise transition fails
+    }
   
     const fadeIn = {
       hidden: { opacity: 0, y: 50 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
     }
 
   return (
-    <section
+    <motion.section
     className={classes.opening}
-    
+    ref={ref}
+    initial="hidden"
+    animate={controls}
+    variants={fadeInBG}
     >
         <motion.h1
         ref={ref}
         initial="hidden"
         animate={controls}
         variants={fadeIn}
-        >Fast and reliable services for the best rates on the Internet
+        ><LangProvider location="opening_heading" />
         </motion.h1>
-        <FirstParagraph classes={classes} />
-        <SecondParagraph classes={classes} />
+        <FirstParagraph />
+        <SecondParagraph />
         <div>
-          {points.map(point => (
-              <p key={point}><IoShieldCheckmark /> {point}</p>
+          {points.map((point, i) => (
+              <BulletPoints point={point} index={i} key={point} />
           ))}
         </div>
-    </section>
+    </motion.section>
   )
 }
 
-function FirstParagraph({ classes }) {
+function FirstParagraph() {
   const controls = useAnimation()
   const { ref, inView } = useInView({
     triggerOnce: true,    
@@ -61,23 +70,22 @@ function FirstParagraph({ classes }) {
 
   const fadeIn = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.1 } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.1 } }
   }
 
 return (
   <motion.p
-  className={classes.opening}
   ref={ref}
   initial="hidden"
   animate={controls}
   variants={fadeIn}
   >
-   Filing out immigration forms doesn’t have to be complicated or costly. Too often, lawyers charge excessive fees for straightforward paperwork, making the process unaffordable for many. Not to mention all the mistakes they tend to make out of carelessness which result in delays and needless stress for you.
+    <LangProvider location="opening_p1" />
   </motion.p>
 )
 }
 
-function SecondParagraph({ classes }) {
+function SecondParagraph() {
   const controls = useAnimation()
   const { ref, inView } = useInView({
     triggerOnce: true,    
@@ -92,19 +100,48 @@ function SecondParagraph({ classes }) {
 
   const fadeIn = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2 } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, delay: 0.2 } }
   }
 
 return (
   <motion.p
-  className={classes.opening}
   ref={ref}
   initial="hidden"
   animate={controls}
   variants={fadeIn}
   >
-   We believe everyone deserves access to affordable immigration support. We simplify the application process, guiding you step-by-step to ensure your forms are completed accurately and on time. With our help, you can confidently handle your immigration paperwork without the high price tag, giving you peace of mind and clarity on your journey forward!
+    <LangProvider location="opening_p2" />
   </motion.p>
+)
+}
+
+function BulletPoints({ index, point }) {
+  const controls = useAnimation()
+  const { ref, inView } = useInView({
+    triggerOnce: true,    
+    threshold: 0.2,      
+  })
+
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible")
+    }
+  }, [controls, inView])
+
+  const popIn = {
+    hidden: { scale: 0 },
+    visible: { scale: 1 }
+  }
+
+return (
+      <motion.p
+        ref={ref}
+        initial="hidden"
+        animate={controls}
+        variants={popIn}
+        transition={{ duration: 0.5, delay: index * 0.2 }}
+      ><IoShieldCheckmark /> <LangProvider location={point} />
+      </motion.p>
 )
 }
 

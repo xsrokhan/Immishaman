@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { motion, useAnimation } from "framer-motion"
 import { useInView } from "react-intersection-observer"
 import Modal from './Modal'
 import { FaChevronDown } from "react-icons/fa6"
+import { LangProvider } from '../LangProvider'
+import { PlaceholderProvider } from '../LangProvider'
+import { Context } from '../Context'
 
 const optionsArray = [
     "I-90 | Application to Replace Permanent Resident Card",
@@ -55,7 +58,11 @@ function Contact({ classes }) {
     const [openModal, setOpenModal] = useState(false)
     const [modalExitAnim, setModalExitAnim] = useState(false)
     const [selectedService, setSelectedService] = useState("")
-    const [submitText, setSubmitText] = useState("Send")
+    const [sending, setSending] = useState(false)
+    const [sent, setSent] = useState(false)
+    const [error, setError] = useState(false)
+
+    const { lang } = useContext(Context) 
 
     const controls = useAnimation()
     const { ref, inView } = useInView({
@@ -97,7 +104,7 @@ function Contact({ classes }) {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        setSubmitText("Please wait...")
+        setSending(true)
 
         const formData = new FormData(e.target)
         const object = Object.fromEntries(formData.entries())
@@ -114,20 +121,17 @@ function Contact({ classes }) {
             });
             const data = await response.json()
             if (response.status === 200) {
-                setSubmitText(data.message) // Success message
+                setSent(true)
             } else {
-                setSubmitText("Submission failed. Try again.")
                 console.error(data.message)
+                setError(true)
             }
         } catch (error) {
             console.error("Error:", error)
-            setSubmitText("Something went wrong!")
+            setError(true)
+        } finally {
+            setSending(false)
         }
-
-        setTimeout(() => {
-            setSubmitText("Send") // Reset button text after a delay
-            e.target.reset() // Reset form fields if needed
-        }, 3000);
     }
 
   return (
@@ -138,7 +142,7 @@ function Contact({ classes }) {
               animate={controls}
               variants={fadeIn}
           >
-            Contact us
+            <LangProvider location="contact_heading" />
           </motion.h1>
         <motion.form onSubmit={handleSubmit}
             ref={ref}
@@ -151,34 +155,36 @@ function Contact({ classes }) {
             <div className={classes.f_and_lname}>
                 <div>
                     <input type="text" name="fname" id="fname" required />
-                    <label htmlFor="fname">First name</label>
+                    <label htmlFor="fname"><LangProvider location="fname" /></label>
                 </div>
                 <div>
                     <input type="text" name="lname" id="lname" required />
-                    <label htmlFor="lname">Last name</label>
+                    <label htmlFor="lname"><LangProvider location="lname" /></label>
                 </div>
             </div>
             <div>
                 <input type="email" name="email" id="email" required />
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email"><LangProvider location="email" /></label>
             </div>
             <div className={classes.service} onClick={() => setOpenModal(true)}>
-                <input type="text" name="service" id="service" value={selectedService} required />
-                <label htmlFor="service">Service</label>
+                <input type="text" name="service" id="service" value={selectedService} onChange={() => null} required />
+                <label htmlFor="service"><LangProvider location="service" /></label>
                 <span><FaChevronDown /></span>
             </div>
             <div>
                 <input type="text" name="refnum" id="refnum" required />
-                <label htmlFor="refnum">Reference number (put 0 if none)</label>
+                <label htmlFor="refnum"><LangProvider location="ref_num" /></label>
             </div>
-            <textarea placeholder="Brief message" name="message" required={selectedService === "Something else"} />
-            <button type="submit">{submitText}</button>
+            {selectedService === "Something else" && <textarea placeholder={PlaceholderProvider({ lang, location: "msg" })} name="message" required/>}
+            {sent && <div className={classes.msg}><LangProvider location="sent" /></div>}
+            {error && <div className={classes.msg}><LangProvider location="error" /></div>}
+            <button type="submit" style={{pointerEvents: (sending || sent ? "none": "auto")}}>{(!sending && !sent) ? <LangProvider location="submit" /> : sending ? <i className={`fa-solid fa-spinner fa-spin`}></i> : <i className={`fa-solid fa-check`}></i>}</button>
         </motion.form>
         {openModal && 
         <Modal classes={classes} modalExitAnim={modalExitAnim}>
-            <h3>Choose a service</h3>
+            <h3><LangProvider location="choose_service" /></h3>
             <ul>{options.map((option, i) => (
-                <li key={option} onClick={() => handleCloseModal(option)} style={{color: (i === 0 && selectedService) && "white", backgroundColor: (i === 0 && selectedService) && "black"}}>{option}</li>
+                <li key={option} onClick={() => handleCloseModal(option)} style={{color: (i === 0 && selectedService) && "white", backgroundColor: (i === 0 && selectedService) && "#122d57"}}>{option}</li>
             ))}
             </ul>
         </Modal>}

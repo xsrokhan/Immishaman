@@ -1,34 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import { motion, useAnimation } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { LangProvider } from '../LangProvider'
 import FAQarrow from './FAQarrow'
 
 const defaultState = {
     "1": false,
     "2": false,
-    "3": false
+    "3": false,
+    "4": false
   }
   
 function FAQ({ classes }) {
 
     const faq = [
         {
-          question: "Lorem ipsum blabla bla?",
-          answer: "answer"
+          question: <LangProvider location="q1" />,
+          answer: <LangProvider location="a1" />
         },
         {
-          question: "question",
-          answer: "answer"
+          question: <LangProvider location="q2" />,
+          answer: <LangProvider location="a2" />
         },
         {
-          question: "question",
-          answer: "answer"
+          question: <LangProvider location="q3" />,
+          answer: <LangProvider location="a3" />
+        },
+        {
+          question: <LangProvider location="q4" />,
+          answer: <LangProvider location="a4" />
         }
       ]
 
   return (
     <section className={classes.faq}>
-      <h1>FAQ</h1>
+      <h1><LangProvider location="faq_heading" /></h1>
       <div className={classes.faq_outer_container}>
         <div className={classes.faq_container}>
           {faq.map((item, index) => (

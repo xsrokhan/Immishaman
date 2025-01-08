@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import classes from "./Navbar.module.scss"
+import { Context } from '../Context.jsx'
 import es from "../flags/es.png"
 import ru from "../flags/ru.png"
 import fr from "../flags/fr.png"
@@ -8,28 +9,47 @@ import fa from "../flags/ir.png"
 import tr from "../flags/tr.png"
 import en from "../flags/us.png"
 import { motion } from 'framer-motion'
-import { ArrowBigLeftDash } from "lucide-react"
+import { ChevronLeft } from "lucide-react"
+
+const flagObj = {
+    "Русский": [ru, "ru"],
+    "Español": [es, "es"],
+    "فارسی": [fa, "fa"],
+    "العربية": [ar, "ar"],
+    "Français": [fr, "fr"],
+    "Türkçe": [tr, "tr"],
+    "English": [en, "en"]
+}
+
+const initLangObj = {
+    "ru": "Русский",
+    "es": "Español",
+    "fa": "فارسی",
+    "ar": "العربية",
+    "fr": "Français",
+    "tr": "Türkçe",
+    "en": "English"
+}
 
 
 function Navbar() {
+    const { lang, changeLang } = useContext(Context)
     const [open, setOpen] = useState(false)
-    const [langs, setLangs] = useState(["Español", "Русский", "فارسی", "العربية", "Français", "Türkçe"])
-    const [selectedLang, setSelectedLang] = useState("English")
+    const [langs, setLangs] = useState([])
+    const [selectedLang, setSelectedLang] = useState("")
+
+    useEffect(() => {
+        let langs = Object.values(initLangObj).filter(l => l !== initLangObj[lang])
+        let selected = initLangObj[lang]
+        setLangs(langs)
+        setSelectedLang(selected)
+    }, [])
 
     function handleLangSelection(lang) {
         let updatedList = [selectedLang, ...langs.filter(l => l != lang)]
         setLangs(updatedList)
+        changeLang(flagObj[lang][1])
         setSelectedLang(lang)
-    }
-
-    const flagObj = {
-        "Русский": ru,
-        "Español": es,
-        "فارسی": fa,
-        "العربية": ar,
-        "Français": fr,
-        "Türkçe": tr,
-        "English": en
     }
 
   return (
@@ -41,8 +61,8 @@ function Navbar() {
 </svg>
         </div>
         <div className={`${classes.lang_container} ${open ? classes.options_open : ''}`}>
-            <div>
-                <ArrowBigLeftDash className={`${classes.svg} ${open ? classes.options_open : ''}`} />
+            <div onClick={() => setOpen((prev) => !prev)}>
+                <ChevronLeft className={`${classes.svg} ${open ? classes.options_open : ''}`} />
             </div>
             <div className={`${classes.lang_options} ${open ? classes.options_open : ''}`}>
                 {langs.map(lang => (
@@ -51,7 +71,7 @@ function Navbar() {
                     layout
                     >
                         <div onClick={() => handleLangSelection(lang)}>{lang}</div>
-                        <img src={flagObj[lang]} onClick={() => handleLangSelection(lang)}/>
+                        <img src={flagObj[lang][0]} onClick={() => handleLangSelection(lang)}/>
                     </motion.div>
                 ))}
             </div>

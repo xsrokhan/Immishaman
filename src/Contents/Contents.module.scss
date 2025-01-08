@@ -1,28 +1,25 @@
+@use "../Global.scss" as g;
+
 .contents {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
+    @include g.flex-column($gap: 3rem, $align: center);
 
     & > section {
         width: max(70%, 350px);
 
         & > h1, div > h1 {
-          olor: #1F2326;
-          color: #122d57;
-          font-size: 2em !important; // needed because h1 in section defaults to 1.5em
+          color: g.$dark-blue;
+          font-size: 2rem !important; // needed because h1 in section defaults to 1.5em
           letter-spacing: 0.3rem;
+          text-align: center;
         }
     }
 
     & > .opening {
-        display: flex;
-        flex-direction: column;
-        background-color: #f4f8f9;
+        @include g.flex-column();
         transition: background-color 1.5s;
         border-bottom-left-radius: 15px;
         border-bottom-right-radius: 15px;
-        padding-top: 3rem;
+        padding: 3rem 0.5rem 0 0.5rem;
         
         & > h1, h1 + p, h1 + p + p {
             text-align: center;
@@ -35,33 +32,25 @@
         }
 
         & > div {
-          display: flex;
-          justify-content: space-around;
-          gap: 2rem;
+          @include g.flex(2rem, space-around);
           flex-wrap: wrap;
 
           & > p {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+            @include g.flex($gap: 1rem, $align: center);
             font-size: 1.4rem;
             font-weight: 600;
             letter-spacing: 0.1rem;
-            color: #122d57;
+            color: g.$dark-blue;
           }
         }
     }
 
     & > .services {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        @include g.flex-column($align: center);
 
         & > .card_container {
-            display: flex;
+            @include g.flex(10%, space-evenly);
             flex-wrap: wrap;
-            gap: 10%;
-            justify-content: space-evenly;
             width: 100%;
             max-width: 1600px;
 
@@ -69,10 +58,7 @@
                 height: 420px;
                 width: 300px;
                 border-radius: 10px;
-                display: flex;
-                align-items: center;
-                flex-direction: column;
-                gap: 1rem;
+                @include g.flex-column($gap: 1rem, $align: center);
                 position: relative;
                 text-align: center;
                 margin-top: 2rem;
@@ -86,7 +72,7 @@
                   font-size: 1.6rem;
                   color: #122d57;
                   margin: 0;
-                  background-color: #f4f8f9;
+                  background-color: g.$light-blue;
                   width: 100%;
                 }
 
@@ -101,32 +87,37 @@
                   font-size: 2.5rem;
                   font-weight: 600;
                   margin: 0;
-                  padding: 1.5rem 0 0 0;
                   border-bottom-left-radius: 10px;
                   border-bottom-right-radius: 10px;
-                  background-color: #f4f8f9;
+                  background-color: g.$light-blue;
                   flex: 1;
                   width: 100%;
-                  color: #122d57;
-                  text-align: center;
+                  color: g.$dark-blue;
+                  display: grid;
+                  place-items: center;
                 }
             }
         }
     }
 
-    & > .about {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    & > .promo { 
+        @include g.flex(0, center, center);
+        background-color: g.$dark-blue;
+        color: white;
+        padding: 2rem 0.5rem;
+        text-align: center;
+        line-height: 3rem;
+        width: 100%;
+
+        & > h2 {
+          max-width: 1700px;
+        }
     }
 
     & > .faq {
         position: relative;
-        height: 15rem;
         max-width: 850px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        @include g.flex-column($align: center);
 
         & > .faq_outer_container {
             width: 100%;
@@ -135,10 +126,8 @@
             height: 100%;
 
             & > .faq_container {
-                display: flex;
+                @include g.flex-column(0.8rem);
                 width: 100%;
-                flex-direction: column;
-                gap: 0.5rem;
 
                 & > .question_container {
                     position: relative;
@@ -148,12 +137,18 @@
                     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 
                     & > .question {
-                        font-size: 1.7rem;
+                        font-size: 1.5rem;
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
                         padding: 0.5rem 1rem;
                         transition: color 0.5s;
+                        gap: 0.2rem;
+
+                        & > svg {
+                          min-width: 24px;
+                          min-height: 24px;
+                        }
                     }
 
                     & > .answer_container {
@@ -170,6 +165,7 @@
 
                     & > .answer_container[aria-hidden='false'] {
                         grid-template-rows: 1fr;
+                        padding-bottom: 0.5rem;
                       }
                   }
               }
@@ -184,15 +180,18 @@
         overflow: hidden; /* Ensure no clipping */
 
         & > div:first-child {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
+          @include g.flex($justify: space-between, $align: center);
           padding: 0 1rem;
           box-sizing: border-box;
 
+          & > h1 {
+            text-decoration: underline;
+            cursor: pointer;
+          }
+
           & > svg {
             font-size: 2rem;
-            color: #1F2326;
+            color: g.$dark-blue;
             cursor: pointer;
           }
         }
@@ -214,80 +213,59 @@
                                 border-radius: 0.5rem;
                                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                                 padding: 1.3rem;
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: space-evenly;
+                                @include g.flex-column($justify: space-evenly);
                                 height: 100%;
                               
                               & > .reviewer_name {
                                 font-size: 1.3rem;
+                                color: g.$dark-blue;
                               } 
   
-                              & > .review_stars {
-                                    display: flex;
-                                    margin-bottom: 0.5rem;
-  
-                                    & > .star_icon {
-                                      width: 1.25rem;
-                                      height: 1.25rem;
-                                    }
-                                    
-                                    & > .filled_star {
-                                      fill: #ffc107; /* Yellow for filled stars */
-                                      color: #ffc107;
-                                    }
-                                    
-                                    & > .empty_star {
-                                      color: #ffc107; /* Gray for empty stars */
-                                    }
-                              }
-  
                               & > .review_text {
-                                    color: #4a5568;
                                     font-size: 1.1rem;
+                                    background-color: g.$light-blue;
+                                    padding: 0.5rem;
+                                    color: g.$dark-blue;
+                                    border-radius: 15px;
                               }
                           }
                     }
               }
         }
   
-        & >  .review_slider_dots {
-                display: flex;
-                justify-content: center;
-                margin-top: 3rem;
+        & > .review_slider_dots {
+                @include g.flex($justify: center);
+                margin-top: 2rem;
   
                 & > .dot {
                       width: 0.75rem;
                       height: 0.75rem;
+                      padding: 0;
                       border-radius: 50%;
-                      margin: 0 0.25rem;
+                      margin: 0 0.5rem;
                       background-color: #e0e0e0;
                       border: none;
                       cursor: pointer;
                       transition: all 0.5s;
+                      transform: scale(1);
                 }
                 
                 & > .active_dot {
-                      background-color: #122d57;
+                      background-color: g.$dark-blue;
                 }
         }
       }
 
       & > .contact {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        @include g.flex-column($align: center);
 
         & > form {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
+          @include g.flex-column(1rem);
           width: 100%;
           max-width: 500px;
 
           & > .f_and_lname {
-            display: flex;
-            gap: 2rem;
+            @include g.flex(2rem);
           }
 
           & > div, & > .f_and_lname > div {
@@ -338,6 +316,7 @@
             top: 50%;
             transform: translateY(-50%);
             right: 3%;
+            color: g.$dark-blue;
            }
          }
 
@@ -351,14 +330,20 @@
           font-size: 1.2rem;
          }
 
+         & > .msg {
+          color: g.$dark-blue;
+          font-weight: 600;
+         }
+
          & > button {
           width: 40%;
           margin: 0 auto;
           cursor: pointer;
-          background-color: #036;
+          background-color: g.$dark-blue;
           color: white;
           border-radius: 10px;
           outline: none;
+          border: none;
           padding: 0.5rem 0;
           font-size: 1.1rem;
          }
@@ -392,22 +377,20 @@
     animation: fadeIn 0.5s;
 
     & > .modal_content {
-        height: min(90%, 45rem);
+        height: min(90%, 35rem);
         width: min(95%, 40rem);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid black;
+        @include g.flex-column($gap: 2rem, $align: center);
         background-color: white;
         border-radius: 10px;
         overflow-y: auto;
         position: relative;
+        padding-bottom: 2rem;
 
         & > .close_review_form {
-          position: absolute;
-          top: 5%;
-          right: 5%;
+          display: flex;
+          width: 100%;
+          padding: 1rem 1rem 0 0;
+          justify-content: flex-end;
           cursor: pointer;
 
           & > svg {
@@ -415,10 +398,81 @@
           }
         }
 
+        // all reviews
+        & > .full_reviews_container {
+          padding: 5px 1rem 1rem 1rem;
+          @include g.flex-column(1.3rem);
+          overflow-y: auto;
+
+          &::-webkit-scrollbar {
+            width: 12px; 
+            height: 8px; 
+          }
+          
+          &::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px; 
+          }
+          
+          &::-webkit-scrollbar-thumb {
+            background: g.$dark-blue; 
+            border-radius: 4px;
+            cursor: pointer; 
+          }
+
+          & > div {
+              @include g.flex-column();
+              border-radius: 10px;
+              box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+              padding: 1.5rem;
+              position: relative;
+
+              & > h3 {
+                color: g.$dark-blue;
+              }
+              
+              & > p {
+                color: g.$dark-blue;
+                font-size: 1.2rem;
+                background-color: g.$light-blue;
+                padding: 0.5rem;
+                border-radius: 15px;
+              }
+
+              & > .date {
+                color: g.$dark-blue;
+                font-style: italic;
+              }
+          }
+        }
+        
+
+        // service selection
+        & > h3 {
+          color: g.$dark-blue;
+          margin-bottom: 0;
+        }
+
         & > ul {
           overflow-y: auto;
           padding: 0 0.3rem 0 0.7rem;
           margin: 0;
+
+          &::-webkit-scrollbar {
+            width: 12px; 
+            height: 8px; 
+          }
+          
+          &::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px; 
+          }
+          
+          &::-webkit-scrollbar-thumb {
+            background: g.$dark-blue; 
+            border-radius: 4px;
+            cursor: pointer; 
+          }
 
           & > li {
             list-style-type: none;
@@ -428,13 +482,86 @@
             margin-bottom: 0.5rem;
             padding: 0.2rem 0 0.2rem 0.3rem;
             border-radius: 5px;
+            background-color: g.$light-blue;
+            color: g.$dark-blue;
 
             &:hover {
-              background-color: black;
-              color: white;
+              background-color: g.$dark-blue;
+              color: g.$light-blue;
             } 
           }
-        }        
+        }
+        
+        // review form
+        & > .review_form {
+          @include g.flex-column(3rem);
+          width: min(500px, 85%);
+      
+          & > .star_container {
+            @include g.flex($gap: 1rem, $align: center);
+      
+            & > svg {
+              cursor: pointer;
+              color: #ffc107;
+            }
+          }
+      
+          & > div {
+            position: relative;
+      
+            & > input {
+                font-size: 1.2rem;
+                outline: none;
+                padding: 1.5rem 3rem 0.5rem 1rem;
+                border-radius: 5px;
+                width: 100%;
+                box-sizing: border-box;
+                border: 1px solid grey;
+      
+                &:focus + label,
+                &:valid + label {
+                top: 10%;
+                font-size: 12px;
+                transform: translateY(0%);
+                }
+            }
+      
+            & > label {
+                position: absolute;
+                top: 50%;
+                left: 1rem;
+                transform: translateY(-50%);
+                font-size: 17px;
+                pointer-events: none;
+                transition: all 0.2s ease;
+                opacity: 0.6;
+            }
+         }
+      
+         & > textarea {
+          resize: none;
+          border: 1px solid grey;
+          outline: none;
+          border-radius: 5px;
+          padding: 0.6rem;
+          font-family: Arial;
+          font-size: 1.2rem;
+          height: 7rem;
+         }
+      
+         & > button {
+          width: 40%;
+          margin: 0 auto;
+          cursor: pointer;
+          background-color: g.$dark-blue;
+          color: white;
+          border-radius: 10px;
+          border: none;
+          outline: none;
+          padding: 0.5rem 0;
+          font-size: 1.1rem;
+         }
+       }
     }
 }
 
@@ -470,78 +597,23 @@
     to {scale: 0}
   }
 
-  .review_form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: min(500px, 85%);
-    margin: 0 1rem;
 
-    & > .star_container {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
+ // used both in all reviews and leave a review modal
+ .review_stars {
+  display: flex;
+  margin-bottom: 0.5rem;
 
-      & > svg {
-        cursor: pointer;
-        color: #ffc107;
-      }
-    }
-
-    & > div {
-      position: relative;
-
-      & > input {
-          font-size: 1.2rem;
-          outline: none;
-          padding: 1.5rem 3rem 0.5rem 1rem;
-          border-radius: 5px;
-          width: 100%;
-          box-sizing: border-box;
-          border: 1px solid grey;
-
-          &:focus + label,
-          &:valid + label {
-          top: 10%;
-          font-size: 12px;
-          transform: translateY(0%);
-          }
-      }
-
-      & > label {
-          position: absolute;
-          top: 50%;
-          left: 1rem;
-          transform: translateY(-50%);
-          font-size: 17px;
-          pointer-events: none;
-          transition: all 0.2s ease;
-          opacity: 0.6;
-      }
-   }
-
-   & > textarea {
-    resize: none;
-    border: 1px solid grey;
-    outline: none;
-    border-radius: 5px;
-    padding: 0.6rem;
-    font-family: Arial;
-    font-size: 1.2rem;
-    height: 7rem;
-   }
-
-   & > button {
-    width: 40%;
-    margin: 0 auto;
-    cursor: pointer;
-    background-color: #1F2326;
-    color: white;
-    border-radius: 10px;
-    outline: none;
-    padding: 0.5rem 0;
-    font-size: 1.1rem;
-   }
- }
+  & > .star_icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
   
+  & > .filled_star {
+    fill: #ffc107; 
+    color: #ffc107;
+  }
   
+  & > .empty_star {
+    color: #ffc107; 
+  }
+}

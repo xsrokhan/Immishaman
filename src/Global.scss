@@ -1,0 +1,17 @@
+$dark-blue: #122d57;
+$light-blue: #f4f8f9;
+
+@mixin flex($gap: 0, $justify: flex-start, $align: stretch) {
+  display: flex;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+@mixin flex-column($gap: 0, $justify: flex-start, $align: stretch) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}

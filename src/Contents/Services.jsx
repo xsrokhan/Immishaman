@@ -1,31 +1,32 @@
 import React, { useEffect } from 'react'
 import { motion, useAnimation } from "framer-motion"
 import { useInView } from "react-intersection-observer"
-import regular from "../USCIS.png"
-import premium from "../USCIS_premium.png"
-import family from "../USCIS_family.png"
+import { LangProvider } from '../LangProvider'
+import regular from "../assets/USCIS.png"
+import premium from "../assets/USCIS_premium.png"
+import family from "../assets/USCIS_family.png"
 
 function Services({ classes }) {
     const services = [
         {
-            title: "Basic",
-            desc: "We fill out the form and give you instructions on how to send it.",
+            title: <LangProvider location="basic" />,
+            desc: <LangProvider location="basic_txt" />,
             price: "100"
         },
         {
-            title: "Premium",
-            desc: "We take care of everything! First class mailing fee is included in the price.",
+            title: <LangProvider location="premium" />,
+            desc: <LangProvider location="premium_txt" />,
             price: "150"
         },
         {
-            title: "Family package",
-            desc: "All premium benefits for a reduced price if applying for at least 3 people.",
+            title: <LangProvider location="family" />,
+            desc: <LangProvider location="family_txt" />,
             price: "320"
         },
         {
-            title: "Translation",
-            desc: "Any official document like a birth certificate, marriage certificate, school diploma, etc.",
-            price: "15/page"
+            title: <LangProvider location="translation" />,
+            desc: <LangProvider location="translation_txt" />,
+            price: <LangProvider location="translation_price" />
         }
     ]
     const controls = useAnimation()
@@ -53,7 +54,7 @@ function Services({ classes }) {
             animate={controls}
             variants={fadeIn}
         >
-            Services
+            <LangProvider location="services_heading" />
         </motion.h1>
         <div className={classes.card_container}>
             {services.map((service, i) => (
@@ -89,7 +90,7 @@ function AnimatedCard({ service, index, classes }) {
             initial="hidden"
             animate={controls}
             variants={cardVariants}
-            transition={{ delay: index * 0.2, duration: 0.5 }} // Stagger by index
+            transition={{ delay: index * 0.1, duration: 0.5 }} // Stagger by index
         >
             <img src={index === 0 ? regular : index === 1 ? premium : family} style={{width: index < 2 ? "80px" : "160px", height: "80px"}}/>
             <h2>{service.title}</h2>
