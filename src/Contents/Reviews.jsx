@@ -121,12 +121,12 @@ function Reviews({ classes }) {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  /*useEffect(() => {
+  useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % reviews.slice(0, 4).length)
-    }, 3000)
+    }, 4000)
     return () => clearInterval(timer)
-  }, [currentIndex])*/
+  }, [currentIndex])
 
   const handleDotClick = (index) => {
     setCurrentIndex(index)
@@ -200,7 +200,7 @@ function handleSubmitReview(event) {
             <div>
               <input type="text" name="service_number" id="service_number" required />
               <label htmlFor="service_number"><LangProvider location="service_num"/></label>
-              {incorrectRefnum && <div style={{color: "firebrick", position: "absolute", top: "120%"}}>The service number is incorrect</div>}
+              {incorrectRefnum && <div style={{color: "firebrick", position: "absolute", top: "120%"}}><LangProvider location="service_num_incorrect"/></div>}
             </div>
             <div className={classes.star_container}>
               <Star onClick={() => setRating(1)} style={{fill: rating >= 1 ? "#ffc107": ""}} />

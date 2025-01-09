@@ -1,12 +1,9 @@
-$dark-blue: #122d57;
-$light-blue: #dfecf3;
+@use "../Global.scss" as g;
 
 .nav {
-    background-color: $dark-blue;
+    background-color: g.$dark-blue;
+    @include g.flex(0, space-between, center);
     height: 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 0.3rem 1rem;
 
     & > div:first-child { // logo
@@ -22,19 +19,15 @@ $light-blue: #dfecf3;
     }
 
     & > .lang_container {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
+        @include g.flex(0, flex-end, center);
         color: white;
-        width: 80% !important; 
-        transition: width 1s ease;
-        ackground-color: green;
+        width: 100%; 
         
-        & > div:first-child {
+        & > div:first-child { // arrow
             padding-top: 0.2rem;
             cursor: pointer;
             
-            & > .svg {
+            & > svg {
                 transition: transform 1s;
             }
 
@@ -48,51 +41,42 @@ $light-blue: #dfecf3;
         }
 
         & > .lang_options {
-            transition: width 1.2s ease;
+            transition: width 1s ease;
             overflow: hidden;
-            display: flex;
-            justify-content: space-around;
+            @include g.flex(0, space-around);
             width: 0;
             flex-shrink: 0; /* Prevents the menu from shrinking */
-            ackground-color: aqua;
 
             & > div > img {
                 display: none;
             }
 
-            & > div > div::after {
+            & > div > div::after { // border-bottom line
                 content: "";
                 display: block;
                 height: 1px;
                 width: 0;
-                background-color: $light-blue;
+                background-color: g.$light-blue;
                 transition: width 0.3s;
             }
             
-            & > div:hover > div::after {
+            & > div:hover > div::after { // border-bottom line 
                 width: 100%;
             }
         }
 
         & > .selected_lang {
-            border-bottom: 1px solid $light-blue;
+            border-bottom: 1px solid g.$light-blue;
             margin-left: 1rem;
         }
 
         & > .options_open {
-            width: 100%;
+            width: 80%;
           }
-    }
-
-    & > .lang_container.options_open {
-        width: 80%;
     }
 }
 
-@media (max-width: 900px) { 
-    .nav > div:first-child.options_open {
-        width: 0;
-    }
+@media (max-width: 900px) {
     .nav > .lang_container > .lang_options {
         
         & > div > div {
@@ -104,25 +88,18 @@ $light-blue: #dfecf3;
             height: 20px;
             width: 20px;
         }
-    }
-
-    .nav > .lang_container.options_open {
-        width: 90%;
     } 
+}
+
+@media (max-width: 700px) { 
+    .nav > div:first-child.options_open {
+        width: 0;
+    }
 
     .nav > .lang_container {
 
         & > .options_open {
-            width: 90%;
+            width: 70%;
         }
     }
 }
-
-@keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
