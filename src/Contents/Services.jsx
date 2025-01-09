@@ -5,6 +5,7 @@ import { LangProvider } from '../LangProvider'
 import regular from "../assets/USCIS.png"
 import premium from "../assets/USCIS_premium.png"
 import family from "../assets/USCIS_family.png"
+import ata from "../assets/ata.png"
 
 function Services({ classes }) {
     const services = [
@@ -92,7 +93,7 @@ function AnimatedCard({ service, index, classes }) {
             variants={cardVariants}
             transition={{ delay: index * 0.1, duration: 0.5 }} // Stagger by index
         >
-            <img src={index === 0 ? regular : index === 1 ? premium : family} style={{width: index < 2 ? "80px" : "160px", height: "80px"}}/>
+            <img src={index === 0 ? regular : index === 1 ? premium : index === 2 ? family : ata} style={{width: index !== 2 ? "80px" : "160px", height: "80px"}}/>
             <h2>{service.title}</h2>
             <p>{service.desc}</p>
             {index !== 4 && <p className={classes.price}>$ {service.price}</p>}

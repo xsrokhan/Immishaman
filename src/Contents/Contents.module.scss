@@ -213,7 +213,7 @@
                                 border-radius: 0.5rem;
                                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
                                 padding: 1.3rem;
-                                @include g.flex-column($justify: space-evenly);
+                                @include g.flex-column(0.7rem);
                                 height: 100%;
                               
                               & > .reviewer_name {
@@ -363,7 +363,7 @@
     }
   }
 
-
+  // modal styles
   .modal_overlay {
     display: grid;
     place-items: center;
@@ -569,14 +569,6 @@
     animation: fadeOut 0.4s forwards;
 }
 
-.popIn {
-  animation: popIn 0.5s;
-}
-
-.popAway {
-  animation: popAway 0.3s forwards;
-}
-
 @keyframes fadeIn {
     from {opacity: 0}
     to {opacity: 1}
@@ -587,21 +579,10 @@
     to {opacity: 0}
   }
 
-  @keyframes popIn {
-    from {scale: 0}
-    to {scale: 1}
-  }
-
-  @keyframes popAway {
-    from {scale: 1}
-    to {scale: 0}
-  }
-
 
  // used both in all reviews and leave a review modal
  .review_stars {
   display: flex;
-  margin-bottom: 0.5rem;
 
   & > .star_icon {
     width: 1.25rem;

@@ -14,84 +14,84 @@ const reviews = [
     id: 1,
     rating: 5,
     name: "Talgat K.",
-    text: "Absolutely love this product! It's a game-changer.",
+    text: "Квалифицированные специалисты, помогли с оформлением всех документов.",
     date: "12/27/2023"
   },
   {
     id: 2,
-    rating: 4,
-    name: "Abbas A.",
-    text: "Great value for money. Highly recommended!",
+    rating: 5,
+    name: "Leonardo P.",
+    text: "Servicio muy rápido y preciso, lo recomiendo 👍",
     date: "11/15/2023"
   },
   {
     id: 3,
     rating: 5,
-    name: "Bahram G.",
-    text: "Outstanding quality and excellent customer service.",
+    name: "Yusuf K.",
+    text: "Başvurum çok hızlı bir şekilde onaylandı, teşekkürler!",
     date: "10/26/2023"
   },
   {
     id: 4,
-    rating: 4,
-    name: "Kamila O.",
-    text: "Very satisfied with my purchase. Will buy again.",
+    rating: 5,
+    name: "Paula B.",
+    text: "Un servicio excelente, nos ayudaron mucho.",
     date: "09/08/2023"
   },
   {
     id: 5,
-    rating: 3,
-    name: "Alex T.",
-    text: "Good product, but there's room for improvement.",
+    rating: 5,
+    name: "Saul T.",
+    text: "Gracias a ellos, mi proceso fue mucho más sencillo.",
     date: "08/29/2023"
   },
   {
     id: 6,
     rating: 5,
-    name: "Javad K.",
-    text: "Exceeded my expectations in every way!",
+    name: "Nurslan A.",
+    text: "Четко 👌",
     date: "07/02/2023"
   },
   {
     id: 7,
     rating: 5,
-    name: "Mavad K.",
-    text: "Exceeded my expectations in every way!",
+    name: "Kamila O.",
+    text: "Быстро и дешево. Теперь для оформления документов даже адвокат не нужен.",
     date: "12/03/2023"
   },
     {
     id: 8,
     rating: 5,
-    name: "Kavad K.",
-    text: "Exceeded my expectations in every way!",
+    name: "Arya H.",
+    text: "Kheyli mamnoon 🙏",
     date: "11/29/2023"
   },
     {
     id: 9,
     rating: 5,
-    name: "Navad K.",
-    text: "Exceeded my expectations in every way!",
+    name: "Nusret S.",
+    text: "İletişim çok kolaydı ve her zaman yardımcı oldular.",
     date: "10/11/2023"
   },
     {
     id: 10,
     rating: 5,
-    name: "Javad K.",
-    text: "Exceeded my expectations in every way!",
+    name: "Rafael L.",
+    text: "Excelente comunicación y seguimiento constante, gracias!",
     date: "09/22/2023"
   },
     {
     id: 11,
     rating: 5,
-    name: "Javad K.",
-    text: "Exceeded my expectations in every way!",
+    name: "Juan P.",
+    text: "Facilitaron todo el papeleo y me ahorraron mucho tiempo.",
     date: "08/05/2023"
   },
     {
     id: 12,
     rating: 5,
-    name: "Javad K.",
-    text: "Exceeded my expectations in every way!",
+    name: "Сергей В.",
+    text: "Оформили документы на всю семью за один день, всем рекомендую!",
     date: "07/18/2023"
   }
 ]
@@ -121,12 +121,12 @@ function Reviews({ classes }) {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  useEffect(() => {
+  /*useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % reviews.slice(0, 4).length)
     }, 3000)
     return () => clearInterval(timer)
-  }, [currentIndex])
+  }, [currentIndex])*/
 
   const handleDotClick = (index) => {
     setCurrentIndex(index)
